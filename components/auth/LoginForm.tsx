@@ -1,183 +1,267 @@
-'use client'
+'use client';
 
-import { signIn, useSession } from "next-auth/react"
-import { Formik, Form } from "formik"
-import * as Yup from "yup"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import Image from "next/image"
-import BackgroundImage from "@/public/images/donation-login.jpg"
-import GoogleIcon from "@/public/images/google.png"
-import FacebookIcon from "@/public/images/facebook.png"
-
+import { signIn, useSession } from "next-auth/react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Loader2, Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { toast, Toaster } from 'react-hot-toast';
+import { motion } from "framer-motion";
+import BackgroundImage from "@/public/images/donation-login.jpg";
+import GoogleIcon from "@/public/images/google.png";
+import FacebookIcon from "@/public/images/facebook.png";
+import SampleLogo from "@/public/images/iDonateLogoSample.png";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().required("Password is required"),
-})
+  email: Yup.string().email("Invalid email address").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  rememberMe: Yup.boolean(),
+});
 
 export default function LoginForm() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
+  const [isHovering, setIsHovering] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (values: { email: string; password: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
-    const result = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    })
-    if (result?.error) {
-      alert("Login failed. Please try again.")
+  const handleSubmit = async (
+    values: { email: string; password: string; rememberMe: boolean },
+    { setSubmitting, setFieldError }: { setSubmitting: (isSubmitting: boolean) => void, setFieldError: (field: string, message: string) => void }
+  ) => {
+    try {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+        rememberMe: values.rememberMe,
+      });
+      
+      if (result?.error) {
+        setFieldError("email", "Invalid email or password");
+        setFieldError("password", "Invalid email or password");
+        toast.error("Invalid email or password");
+      } else {
+        toast.success("Login successful!");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false)
-  }
+  };
 
   if (status === "loading") {
-    return <div>Loading...</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center md:grid md:grid-cols-2">
-      {/* Left section with image */}
-      <div className="relative hidden md:block border-4  m-4 rounded-lg overflow-hidden">
-        <Image
-          src={BackgroundImage}
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute top-4 left-4">
-          <Image
-            src="/placeholder.svg"
-            alt="ISTAD Logo"
-            width={50}
-            height={50}
-          />
-        </div>
-      </div>
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] -z-10" />
+      <Image
+        src={BackgroundImage}
+        alt="Background Image"
+        layout="fill"
+        objectFit="cover"
+        quality={100}
+        priority
+      />
 
-      {/* Right section with form */}
-      <div className="flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
-          {/* Logo */}
-          <div className="flex justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative z-20 w-full max-w-md mx-auto px-4 sm:px-6"
+      >
+        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6 sm:p-10 shadow-2xl border-none rounded-2xl">
+          <motion.div
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            whileTap={{ scale: 0.95, rotate: -5 }}
+            className="flex justify-center mb-6 sm:mb-8"
+          >
             <Image
-              src={BackgroundImage}
+              src={SampleLogo}
               alt="iDonate Logo"
-              width={120}
-              height={120}
-              className="mb-4"
+              width={100}
+              height={100}
+              className="rounded-full shadow-lg"
+              priority
             />
-          </div>
+          </motion.div>
 
-          {/* Header text */}
-          <div className="text-center space-y-2 mb-8">
-            <p className="text-gray-600">Join Donation Today</p>
-            <h1 className="text-2xl font-bold text-gray-900">Happening now</h1>
-          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-iDonate-navy-primary">
+            Welcome to{" "}
+            <span className="text-iDonate-green-primary/100 inline-block transform hover:scale-110 transition-transform duration-200">
+              iDonate
+            </span>
+          </h1>
 
-          <Card className="p-6 shadow-lg">
-            <Formik
-              initialValues={{ email: "", password: "" }}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched, isSubmitting, getFieldProps }) => (
-                <Form className="space-y-4">
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder="Email Address"
-                      {...getFieldProps('email')}
-                      className={`w-full ${errors.email && touched.email ? 'border-red-500' : ''}`}
+          <Formik
+            initialValues={{ email: "", password: "", rememberMe: false }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ errors, touched, isSubmitting, getFieldProps }) => (
+              <Form className="space-y-4 sm:space-y-6">
+                <div>
+                  <label htmlFor="email" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+                    <Mail className="w-4 h-4 text-iDonate-navy-primary" />
+                    <span>Email <span className="text-red-500">*</span></span>
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="idonate.istad.co@gmail.com"
+                    {...getFieldProps("email")}
+                    className={`w-full h-10 sm:h-11 rounded-md ${
+                      errors.email && touched.email
+                        ? "border-red-500 focus:ring-red-500"
+                        : "focus:ring-iDonate-navy-primary"
+                    }`}
+                  />
+                  {errors.email && touched.email && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-xs mt-1"
+                    >
+                      {errors.email}
+                    </motion.p>
+                  )}
+                </div>
+
+                <div className="relative">
+                  <label htmlFor="password" className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-1">
+                    <Lock className="w-4 h-4 text-iDonate-navy-primary" />
+                    <span>Password <span className="text-red-500">*</span></span>
+                  </label>
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Idonate123@#$!"
+                    {...getFieldProps("password")}
+                    className={`w-full h-10 sm:h-11 pr-10 rounded-md ${
+                      errors.password && touched.password
+                        ? "border-red-500 focus:ring-red-500"
+                        : "focus:ring-iDonate-navy-primary"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-8 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                  {errors.password && touched.password && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-xs mt-1"
+                    >
+                      {errors.password}
+                    </motion.p>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-16 md:gap-36 sm:items-center sm:justify-between text-sm mt-4">
+                  <label className="flex items-center space-x-2 cursor-pointer mb-2 sm:mb-0">
+                    <input
+                      type="checkbox"
+                      {...getFieldProps("rememberMe")}
+                      className="rounded border-gray-300 text-iDonate-navy-primary focus:ring-iDonate-navy-primary"
                     />
-                    {errors.email && touched.email && (
-                      <div className="text-red-500 text-sm mt-1">{errors.email}</div>
-                    )}
-                  </div>
-                  <div>
-                    <Input
-                      type="password"
-                      placeholder="Password"
-                      {...getFieldProps('password')}
-                      className={`w-full ${errors.password && touched.password ? 'border-red-500' : ''}`}
-                    />
-                    {errors.password && touched.password && (
-                      <div className="text-red-500 text-sm mt-1">{errors.password}</div>
-                    )}
-                  </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-[#2C3A67] hover:bg-[#1f2847] text-white"
+                    <span className="text-gray-600">Remember me</span>
+                  </label>
+                  <Link
+                    href="/auth/forgot-password"
+                    className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
+
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-6 sm:mt-8"
+                >
+                  <Button
+                    type="submit"
+                    className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
                     disabled={isSubmitting}
                   >
-                    Log in
+                    {isSubmitting ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      "Sign In"
+                    )}
                   </Button>
-                </Form>
-              )}
-            </Formik>
+                </motion.div>
+              </Form>
+            )}
+          </Formik>
 
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">or</span>
-              </div>
-            </div>
+          <div className="flex items-center my-4 mb-0">
+            <span className="flex-grow border-t border-gray-400"></span>
+            <span className="mx-4 text-sm text-gray-500 font-medium">or continue with</span>
+            <span className="flex-grow border-t border-gray-400"></span>
+          </div>
 
-            <div className="space-y-3">
+          <div className="flex items-center justify-center mt-4 space-x-[-20px]">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("google", { callbackUrl: "/" })}
               >
                 <Image
                   src={GoogleIcon}
                   alt="Google"
-                  width={30}
-                  height={30}
-                  className="mr-2"
+                  width={60}
+                  height={60}
                 />
-                Continue with Google
               </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-20 h-20 rounded-full bg-transparent border-none hover:bg-transparent transition-colors duration-200"
                 onClick={() => signIn("facebook", { callbackUrl: "/" })}
               >
                 <Image
                   src={FacebookIcon}
                   alt="Facebook"
-                  width={30}
-                  height={30}
-                  className="mr-2"
+                  width={60}
+                  height={60}
                 />
-                Continue with Facebook
               </Button>
-            </div>
-
-            {session && (
-              <div className="mt-4 text-center">
-                <p className="text-sm text-gray-500">
-                  Signed in as {session.user?.email}
-                </p>
-              </div>
-            )}
-          </Card>
-
-          <div className="text-center mt-6">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <a href="/auth/sign-up" className="text-blue-600 hover:underline font-medium">
-                Signup Now
-              </a>
-            </p>
+            </motion.div>
           </div>
-        </div>
-      </div>
+
+          <p className="mt-4 text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link
+              href="/auth/sign-up"
+              className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200 hover:underline"
+            >
+              Sign up now
+            </Link>
+          </p>
+        </Card>
+      </motion.div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
-  )
+  );
 }
 

@@ -6,12 +6,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**',
         pathname: '/**',
-      },
-      {
+      },{
         protocol: 'http',
-        hostname: 't3.gstatic.com',
+        hostname: '**',
         pathname: '/**',
-      },
+      }
     ],
   },
 };
