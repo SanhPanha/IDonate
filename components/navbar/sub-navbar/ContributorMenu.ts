@@ -2,13 +2,13 @@ import { icons } from "lucide-react";
 
 export const ContributorMenulist = [
     {
-        path: "/donor-dashboard",
+        path: "/donor-dashboard/donor",
         title: "Donor",
         icon: icons.User,
         active: false,
     },
     {
-        path: "/organization-dashboard",
+        path: "/organization-dashboard/dashboard",
         title: "Organization",
         icon: icons.Building2,
         active: false,

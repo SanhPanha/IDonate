@@ -1,13 +1,15 @@
 "use client"
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ContributorMenuType } from "@/difinitions/types/ContributorMenuType";
-import { EventMenulist } from "./EventMenu";
+import { SubNavbarMenuType } from "@/difinitions/types/components-type/SubNavbarMenuType";
 
-export default function EventComponent() {
-    const [menuList] = useState<ContributorMenuType[]>(EventMenulist);
+type SubNavbarComponentProps = {
+    menuList: SubNavbarMenuType[];
+}
+
+export default function SubNavbarComponent({ menuList }: SubNavbarComponentProps) {
     const pathname = usePathname();
 
     const navActiveClass = (isActive: boolean) =>
@@ -26,15 +28,17 @@ export default function EventComponent() {
                             {item?.children ? (
                                 <div className=" flex flex-row items-center ">
                                     <Button className={`${navActiveClass(isActive)} text-lg`}>
-                                        <item.icon style={{ width: '1.5rem', height: '1.5rem' }} fill="iDonate" />
+                                        {/* <item.icon style={{ width: '1.5rem', height: '1.5rem' }} fill="iDonate" /> */}
+                                        {item.icon && <item.icon style={{ width: '1.5rem', height: '1.5rem' }}  />} {/* Render icon if it exists */}
                                         {item.title}                 
                                     </Button>
                                 </div>
                             ) : (
                                 <Link href={item.path} passHref>
                                     <div className="flex flex-row items-center space-x-1">
-                                        <Button className={`${navActiveClass(isActive)} text-lg `}>
-                                            <item.icon style={{ width: '1.5rem', height: '1.5rem' }} />
+                                        <Button className={`${navActiveClass(isActive)}  text-lg `}>
+                                            {/* <item.icon style={{ width: '1.5rem', height: '1.5rem' }} /> */}
+                                            {item.icon  && <item.icon style={{ width: '1.5rem', height: '1.5rem' }}   />} {/* Render icon if it exists */}
                                             {item.title}
                                         </Button>
                                     </div>
