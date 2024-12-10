@@ -2,7 +2,7 @@ import { icons } from "lucide-react";
 
 export const ContributorMenulist = [
     {
-        path: "/donor-dashboard/donor",
+        path: "/donor-dashboard",
         title: "Donor",
         icon: icons.User,
         active: false,
