@@ -11,28 +11,19 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
-        iDonate: {
-          // Green
-          "green-primary": "#55A44A",
-          "green-secondary": "#74DF80",
-          "green-accent": "#BAF4D0",
-  
-          // Navy
-          "navy-primary": "#1E2E4E",
-          "navy-secondary": "#263A61",
-          "navy-accent": "#DCE3F0",
-  
-          //white space
-          "white-space": "#FFFFFF",
-          "white-space-hovering": "#F5F5F5",
-  
-          // Gray
-          "gray": "#808080",
-          "light-gray": "#F6F6F6",
-  
-          // Error
-          "error": "#FF0000",
-        },
+  			iDonate: {
+  				'green-primary': '#55A44A',
+  				'green-secondary': '#74DF80',
+  				'green-accent': '#BAF4D0',
+  				'navy-primary': '#1E2E4E',
+  				'navy-secondary': '#263A61',
+  				'navy-accent': '#DCE3F0',
+  				'white-space': '#FFFFFF',
+  				'white-space-hovering': '#F5F5F5',
+  				'gray': '#808080',
+  				'light-gray': '#F6F6F6',
+  				'error': '#FF0000'
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -72,12 +63,22 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
-      fontFamily: {
-        siemreap: ["var(--font-siemreap)", ...fontFamily.sans],
-        inter: ["var(--font-inter)", ...fontFamily.sans],
-      },
+  		fontFamily: {
+  			siemreap: ["var(--font-siemreap)", ...fontFamily.sans],
+  			inter: ["var(--font-inter)", ...fontFamily.sans]
+  		},
   		fontSize: {
   			'wide-khmer': ['60px', '110px'],
   			'heading-one-khmer': ['36px', '66px'],
@@ -99,9 +100,13 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		boxShadow: {
+			"custom": "1px 1px 8px 2px rgba(0, 0, 0, 0.1)",
+			"light": "0 2px 4px rgba(0, 0, 0, 0.1)"
+		},
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
 };
 export default config;

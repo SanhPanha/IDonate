@@ -2,19 +2,24 @@
 import React, { useState } from "react";
 import { NavMenulist } from "@/components/navbar/NavbarMenu";
 import Link from "next/link";
-import {  Search } from "lucide-react";
+import {  Heart, Search } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { navMenuType } from "@/difinitions/types/NavMenuType";
-import EventComponent from "./event/EventComponent";
-import ContributorComponent from "./contributor/ContributorComponent";
-import AboutComponent from "./about/AboutComponent";
 import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "../ui/menubar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { useTheme } from "next-themes";
+import SubNavbarComponent from "./sub-navbar/SubNavbartComponent";
+import { EventMenulist } from "./sub-navbar/EventMenu";
+import { AboutMenulist } from "./sub-navbar/AboutMenu";
+import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
+import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 
 export default function NavbarComponent() {
-    const [menuList] = useState<navMenuType[]>(NavMenulist);
+    const [menuList] = useState<NavMenuType[]>(NavMenulist);
     const pathname = usePathname();
     const router = useRouter();
+    const { setTheme } = useTheme()
 
     const navActiveClass = (isActive: boolean) =>
         `text-description-eng font-normal ${
@@ -23,7 +28,7 @@ export default function NavbarComponent() {
 
 
     return (
-        <nav className="w-full h-[72px] flex items-center justify-between shadow-md z-10 sticky top-0 px-[100px]">
+        <nav className="w-full h-[72px] flex items-center justify-between shadow-sm z-10  top-0 px-[100px]">
             {/* Logo and Name */}
             <section
                 className="flex items-center space-x-2 cursor-pointer"
@@ -61,13 +66,13 @@ export default function NavbarComponent() {
 
                                 <MenubarContent className="p-4 bg-iDonate-white-space rounded-lg shadow-lg">
                                     {item.title === "Events" && (
-                                            <EventComponent />
+                                            <SubNavbarComponent menuList={EventMenulist} />
                                     )}
                                     {item.title === "Contributors" && (
-                                            <ContributorComponent />
+                                            <SubNavbarComponent menuList={ContributorMenulist} />
                                     )}
                                     {item.title === "About" && (
-                                            <AboutComponent />
+                                            <SubNavbarComponent menuList={ AboutMenulist} />
                                     )}
                                 </MenubarContent>
                             </section>
@@ -80,11 +85,37 @@ export default function NavbarComponent() {
 
             {/* Sign In & Donate */}
             <section className="flex items-center space-x-4">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button 
+                            variant="outline" 
+                            size="icon"
+                            className="bg-iDonate-green-accent hover:bg-iDonate-green-secondary rounded-full border-0 p-2"
+                        >
+                            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
+                            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => setTheme("light")}>
+                        Light
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("dark")}>
+                        Dark
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("system")}>
+                        System
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
                 <span className="text-description-eng font-normal text-iDonate-navy-primary">
                     Sign In
                 </span>
-                <Button className="bg-iDonate-white-space border-2 border-iDonate-navy-primary text-medium-eng hover:bg-iDonate-white-space hover:text-iDonate-navy-primary hover:border-iDonate-navy-primary">
-                    Donate Now
+
+                <Button className="group  bg-iDonate-white-space border-2 border-iDonate-navy-primary px-4 text-iDonate-navy-primary hover:bg-iDonate-navy-primary hover:text-white hover:border-iDonate-navy-primary rounded-[12px] h-[50px]">
+                    <Heart style={{ width: '30px', height: '30px' }} className="bg-iDonate-navy-primary rounded-full p-1 fill-white group-hover:fill-iDonate-navy-primary group-hover:text-iDonate-navy-primary group-hover:bg-iDonate-green-secondary "/>
+                    <span className="text-xl ">Donate Now</span>
                 </Button>
             </section>
         </nav>
