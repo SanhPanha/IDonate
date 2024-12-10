@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signIn } from 'next-auth/react';
 
 interface RegisterState {
   loading: boolean;

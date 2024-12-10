@@ -1,13 +1,9 @@
 
-// import React from 'react'
-// import { RegisterForm } from '@/components/auth/SignUpForm' 
+import SignUpForm from '@/components/auth/SignUpForm'
+import React from 'react'
 
-// export default function page() {
-//   return (
-//   // <SessionWrapper>
-//   //     <RegisterForm/>
-//   //  </SessionWrapper>
-  
-//   <RegisterForm/>
-//   )
-// }
+export default function page() {
+  return (
+  <SignUpForm/>
+  )
+}

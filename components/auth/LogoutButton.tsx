@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
-import { logoutUser } from '@/store/slices/authSlice'
-import type { AppDispatch } from '@/store/store'
+import { logoutUser } from '@/slices/authSlice'
+import type { AppDispatch } from '@/lib/store'
 
 export function LogoutButton() {
   const dispatch = useDispatch<AppDispatch>()

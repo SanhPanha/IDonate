@@ -18,10 +18,21 @@ import FacebookIcon from "@/public/images/facebook.png";
 import SampleLogo from "@/public/images/iDonateLogoSample.png";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email address").required("Email is required"),
+  email: Yup.string().email("Invalid email address")
+  .required("Email is required")
+  .test(
+    "no-spaces",
+    "Email cannot contain spaces",
+    (value) => value?.trim() === value
+  ),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
+  .required("Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.")
+  .min(8, "Password must be at least 8 characters long")
+  .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+  .matches(/\d/, "Password must contain at least one number")
+  .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain a special character")
+  .test("no-spaces", "Password cannot contain spaces", (value) => !/\s/.test(value)), // Disallow spaces
   rememberMe: Yup.boolean(),
 });
 
@@ -83,7 +94,7 @@ export default function LoginForm() {
         transition={{ duration: 0.5 }}
         className="relative z-20 w-full max-w-md mx-auto px-4 sm:px-6"
       >
-        <Card className="backdrop-blur-md w-full sm:w-[470px] bg-white/70 p-6 sm:p-10 shadow-2xl border-none rounded-2xl">
+        <Card className="backdrop-blur-md w-full sm:w-[500px] bg-white/30 p-6 sm:p-10 shadow-2xl border-none rounded-2xl">
           <motion.div
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95, rotate: -5 }}
@@ -123,11 +134,13 @@ export default function LoginForm() {
                     type="email"
                     placeholder="idonate.istad.co@gmail.com"
                     {...getFieldProps("email")}
-                    className={`w-full h-10 sm:h-11 rounded-md ${
-                      errors.email && touched.email
-                        ? "border-red-500 focus:ring-red-500"
-                        : "focus:ring-iDonate-navy-primary"
-                    }`}
+                    className="ring-iDonate-navy-secondary focus:ring-red-500 border border-iDonate-navy-secondary"
+
+                    // className={`w-full h-10 sm:h-11 rounded-md ${
+                    //   errors.email && touched.email
+                    //     ? "border-red-500 focus:ring-red-500"
+                    //     : "border-none focus:ring-0 focus:outline-none "
+                    // }`}
                   />
                   {errors.email && touched.email && (
                     <motion.p
@@ -152,9 +165,10 @@ export default function LoginForm() {
                     {...getFieldProps("password")}
                     className={`w-full h-10 sm:h-11 pr-10 rounded-md ${
                       errors.password && touched.password
-                        ? "border-red-500 focus:ring-red-500"
+                        ? "border-red-500 "
                         : "focus:ring-iDonate-navy-primary"
                     }`}
+                    // className="ring-iDonate-navy-secondary focus:ring-red-500 border border-iDonate-navy-secondary"
                   />
                   <button
                     type="button"
@@ -185,7 +199,7 @@ export default function LoginForm() {
                   </label>
                   <Link
                     href="/auth/forgot-password"
-                    className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-medium transition-colors duration-200"
+                    className="text-iDonate-navy-primary hover:text-iDonate-navy-primary/80 font-normal transition-colors duration-200"
                   >
                     Forgot Password?
                   </Link>
@@ -198,7 +212,7 @@ export default function LoginForm() {
                 >
                   <Button
                     type="submit"
-                    className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-medium text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
+                    className="w-full h-10 sm:h-11 bg-iDonate-navy-primary hover:bg-iDonate-navy-primary/90 text-white font-normal text-lg rounded-md transition-all duration-200 shadow-md hover:shadow-lg"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -242,8 +256,8 @@ export default function LoginForm() {
                 <Image
                   src={FacebookIcon}
                   alt="Facebook"
-                  width={60}
-                  height={60}
+                  width={1200}
+                  height={1200}
                 />
               </Button>
             </motion.div>
