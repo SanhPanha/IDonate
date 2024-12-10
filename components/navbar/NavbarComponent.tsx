@@ -8,13 +8,20 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "../ui/menubar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "../ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import SubNavbarComponent from "./sub-navbar/SubNavbartComponent";
 import { EventMenulist } from "./sub-navbar/EventMenu";
 import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
+import {signOut, useSession} from "next-auth/react";
 
 export default function NavbarComponent() {
     const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -33,7 +40,7 @@ export default function NavbarComponent() {
       console.log("Status:", status);
     }, [session, status]);
 
-  if (pathname === "/auth/sign-in" && "/auth/sign-up" && "/auth/verification")
+  if (pathname === "/auth/login" && "/auth/sign-up" && "/auth/verification")
     return null;
   else
 
