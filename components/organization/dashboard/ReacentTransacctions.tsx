@@ -3,7 +3,7 @@ import {
   AvatarFallback,
 } from "@/components/ui/avatar";
 import { TransactionType } from "@/difinitions/types/table-type/transaction";
-import { Label } from "../ui/label";
+import { Label } from "../../ui/label";
 
 type RecentSalesProps = {
   transactions: TransactionType[];

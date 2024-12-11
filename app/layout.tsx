@@ -55,7 +55,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </main>
             </section>
           ) : (
-            <main className="w-full overflow-auto scrollbar-hide ">{children}</main>
+            <section className="w-full flex flex-grow bg-transparent h-[calc(100vh-72px)]">
+              <main className="w-full overflow-auto scrollbar-hide ">{children}</main>
+            </section>
           )}
         </ThemeProvider>
           </SessionWrapper>
