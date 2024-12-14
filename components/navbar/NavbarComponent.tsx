@@ -22,6 +22,7 @@ import { AboutMenulist } from "./sub-navbar/AboutMenu";
 import { ContributorMenulist } from "./sub-navbar/ContributorMenu";
 import { NavMenuType } from "@/difinitions/types/components-type/NavMenuType";
 import {signOut, useSession} from "next-auth/react";
+import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 export default function NavbarComponent() {
     const [menuList] = useState<NavMenuType[]>(NavMenulist);
@@ -40,8 +41,12 @@ export default function NavbarComponent() {
       console.log("Status:", status);
     }, [session, status]);
 
-  if (pathname === "/auth/login" && "/auth/sign-up" && "/auth/verification")
-    return null;
+  if (pathname === "/auth/login" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/auth/verification"){
+      return null;
+    }
+   
   else
 
 
