@@ -1,9 +1,9 @@
-import { OrganizationForm } from "@/components/form/organization-form";
+import { OrganizationProfileComponent } from "@/components/form-organization/organization-profile";
 
 export default function Contributor() {
     return (
-      <section className="flex flex-col">
-        <OrganizationForm />
+      <section className="flex flex-col p-9">
+        <OrganizationProfileComponent />
       </section>
     );
   }
