@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import OrganizationSidebarComponent from "@/components/organization/sidebar/OrganizationSidebarComponent";
 import SessionWrapper from "@/components/SessionWrapper";
+import FooterComponent from "@/components/footer/FooterComopent";
 
 const siemreap = localFont({
   src: "/fonts/Siemreap-Regular.ttf",
@@ -55,8 +56,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </main>
             </section>
           ) : (
-            <main className="w-full overflow-auto scrollbar-hide ">{children}</main>
+            <section className="w-full flex flex-grow bg-transparent h-[calc(100vh-72px)]">
+              <main className="w-full overflow-auto scrollbar-hide ">{children}</main>
+            </section>
           )}
+          <FooterComponent/>
         </ThemeProvider>
           </SessionWrapper>
       </body>

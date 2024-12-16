@@ -35,12 +35,12 @@ const chartConfig = {
 
 export function CardsMetric({ data }: AverageProps) {
   return (
-    <Card>
+    <Card className="w-full bg-iDonate-light-gray rounded-lg border border-iDonate-navy-accent">
       <CardHeader>
 
-        <CardTitle>Exercise Minutes</CardTitle>
+        <CardTitle className="text-medium-eng font-normal text-iDonate-navy-secondary">Overall Transaction</CardTitle>
 
-        <CardDescription>
+        <CardDescription className="text-sub-description-eng text-iDonate-navy-secondary">
           Your exercise minutes are ahead of where you normally are.
         </CardDescription>
 
