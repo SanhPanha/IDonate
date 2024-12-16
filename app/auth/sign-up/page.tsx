@@ -1,21 +1,16 @@
+import RegisterForm from "@/components/auth/SignUpForm";
+import { Metadata } from "next";
 
-// import React from 'react'
-// import { RegisterForm } from '@/components/auth/SignUpForm' 
-
-// export default function page() {
-//   return (
-//   // <SessionWrapper>
-//   //     <RegisterForm/>
-//   //  </SessionWrapper>
-  
-//   <RegisterForm/>
-//   )
-// }
+export const metadata: Metadata = {
+  title: "Sign up",
+  description: "Sign up with iDonate to be iDonate member. Thank you",
+  keywords: ["iDonate", "Fundraising", "Fundraiser", "Charity", "Cambodia Charity", "Charity in Cambodia", "Donation"]
+}
 
 export default function About() {
     return (
-      <section className="flex flex-col">
-        <p>This is about Page</p>
+      <section className="grid place-content-center h-[100vh]">
+        <RegisterForm/>
       </section>
     );
   }

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { EventType } from "@/difinitions/types/events/EventType";
+import { EventType } from "@/difinitions/dto/EventType";
 import { Button } from "../ui/button";
 import { CircleDollarSign, Users } from "lucide-react";
 
