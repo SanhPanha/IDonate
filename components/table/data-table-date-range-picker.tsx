@@ -18,10 +18,11 @@ import { useEffect, useState } from "react"
 
 interface DataTableDateFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
-  resetSignal: number; // Add a reset signal prop
+  resetSignal: number;
+  // dateField: string // Add a reset signal prop
 }
 
-export function CalendarDateRangePicker<TData, TValue>({
+export function TableCalendarDateRangePicker<TData, TValue>({
   column,
   resetSignal,
 }: DataTableDateFilterProps<TData, TValue>) {
@@ -73,7 +74,7 @@ export function CalendarDateRangePicker<TData, TValue>({
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>Pick a date range</span>
             )}
           </Button>
         </PopoverTrigger>

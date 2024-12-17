@@ -1,4 +1,3 @@
-import { add } from 'date-fns';
 import * as z from 'zod';
 
 export const RegisterSchema = z.object({
@@ -60,11 +59,21 @@ export const organizationBioSchema = z.object({
 })
 
 export const organizationPaymentSchema = z.object({
-    image: z.any().refine(
-      (files) =>
-        files &&
-        files.length > 0 &&
-        files[0].size <= 5 * 1024 * 1024,
-      { message: "File size must be less than 5MB" }
-    ),
-  });
+  image: z
+  .string()
+  .url("Invalid image URL.")
+  .optional()
+  .or(z.literal("")), // Allow empty string as default value
+});
+  
+export const organizationMediaSchema = z.object({
+  image: z
+    .string()
+    .url("Invalid image URL.")
+    .optional()
+    .or(z.literal("")), // Allow empty string as default value
+});
+
+export const organizationReferenceSchema = z.object({
+  images: z.array(z.instanceof(File)),
+})

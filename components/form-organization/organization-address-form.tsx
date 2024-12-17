@@ -17,6 +17,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { useState } from "react"
 import { SquarePen } from "lucide-react"
 import { organizationAddressSchema } from "../schema/schema"
+import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
 
 export function OrganizationAddressForm() {
   // 1. State to toggle between view and edit mode
@@ -35,6 +36,11 @@ export function OrganizationAddressForm() {
     console.log(values)
     // Switch back to view mode after submitting
     setIsEditing(false)
+  }
+
+  function handleCancel() {
+    form.reset() // Reset the form
+    setIsEditing(false) // Switch back to view mode
   }
 
   return (
@@ -59,7 +65,6 @@ export function OrganizationAddressForm() {
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
               <div className="flex flex-col space-y-3">
-                <CardDescription className="text-lg text-iDonate-gray">Current Address</CardDescription>
                 <CardDescription className="text-xl text-iDonate-navy-primary">Norodom Blvd, 41, Phnom Penh</CardDescription>
               </div>
             </CardContent>
@@ -74,12 +79,42 @@ export function OrganizationAddressForm() {
                 Organization Information
               </CardTitle>
 
-              <Button
-                type="submit"
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
-              >
-                Submit
-              </Button>
+              <div className="flex gap-3">
+                {/* Cancel Button */}
+                {form.formState.isDirty ? (
+                  <AlertComfirmDialog
+                    trigger={
+                      <Button
+                        type="button"
+                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                      >
+                        Cancel
+                      </Button>
+                    }
+                    title="Are you sure you want to cancel?"
+                    description="All unsaved changes will be lost. Do you want to proceed?"
+                    actionText="Yes, Cancel"
+                    cancelText="No, Stay"
+                    onAction={handleCancel}
+                  />
+                ) : (
+                  <Button
+                    type="button"
+                    onClick={handleCancel}
+                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                  >
+                    Cancel
+                  </Button>
+                )}
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                >
+                  Submit
+                </Button>
+              </div>
             </CardHeader>
 
             <CardContent className="flex w-fle gap-9 p-0 m-0">
@@ -88,7 +123,6 @@ export function OrganizationAddressForm() {
                 name="address"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">Current Address</FormLabel>
                     <FormControl className="w-full">
                       <Input placeholder="Elizabeth Joe" {...field} />
                     </FormControl>

@@ -1,13 +1,40 @@
+import { Toolbar } from "@/components/filter/toolbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrganizationEventType } from "@/difinitions/types/events/Organization-event";
 import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
 
+interface OrganizationEventCardProps {
+    events: OrganizationEventType[];
+    searchKey: string;
+    filters: {
+      key: string;
+      title: string;
+      options: { label: string; value: string }[];
+    }[];
+    dateField: string; // The date field for dynamic date filtering
+    onFilterChange: (filters: Record<string, any>) => void;
+  }
 
-export function OrganizationEventCard({ events }:{events : OrganizationEventType[]}) {
+
+  export function OrganizationEventCard({
+    events,
+    searchKey,
+    filters,
+    dateField,
+    onFilterChange,
+  }: OrganizationEventCardProps) {
+
+
     return (
         <>
+         <Toolbar
+            searchKey={searchKey}
+            onFilterChange={onFilterChange}
+            filters={filters}
+            dateField={dateField}
+        />
             {events.map((item, index) => {
                 return (
                     <Card key={index} className="w-full h-[440px] bg-iDonate-white-space rounded-lg shadow-[1px_1px_1px_3px_rgba(0,0,0,0.03)] border p-7 flex flex-col gap-6 border-iDonate-navy-accent">

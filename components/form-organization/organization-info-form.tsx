@@ -18,6 +18,7 @@ import { organizationInfomationSchema } from "../schema/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { useState } from "react"
 import { SquarePen } from "lucide-react"
+import { AlertComfirmDialog } from "../Alert/Alert-Dialog"
 
 export function OrganizationInfoForm() {
   // 1. State to toggle between view and edit mode
@@ -39,6 +40,12 @@ export function OrganizationInfoForm() {
     // Switch back to view mode after submitting
     setIsEditing(false)
   }
+
+  function handleCancel() {
+    form.reset() // Reset the form
+    setIsEditing(false) // Switch back to view mode
+  }
+
 
   return (
     <Form {...form}>
@@ -84,72 +91,102 @@ export function OrganizationInfoForm() {
         {/* Edit Mode */}
         {isEditing && (
           <Card className="flex flex-col bg-iDonate-light-gray rounded-lg border-2 border-iDonate-navy-accent gap-6 p-9">
-            <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
-              <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
-                Organization Information
-              </CardTitle>
-
-              <Button
-                type="submit"
-                className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
-              >
-                Submit
-              </Button>
-            </CardHeader>
-
-            <CardContent className="flex w-fle gap-9 p-0 m-0">
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">Full Name</FormLabel>
-                    <FormControl className="w-[300px]">
-                      <Input placeholder="Elizabeth Joe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
-                      This is your organization's full name.
-                    </FormDescription>
-                  </FormItem>
+          <CardHeader className="flex flex-row items-center justify-between p-0 m-0">
+            <CardTitle className="text-2xl font-medium text-iDonate-navy-secondary">
+              Organization Information
+            </CardTitle>
+        
+            <div className="flex gap-3">
+                {/* Cancel Button */}
+                {form.formState.isDirty ? (
+                  <AlertComfirmDialog
+                    trigger={
+                      <Button
+                        type="button"
+                        className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                      >
+                        Cancel
+                      </Button>
+                    }
+                    title="Are you sure you want to cancel?"
+                    description="All unsaved changes will be lost. Do you want to proceed?"
+                    actionText="Yes, Cancel"
+                    cancelText="No, Stay"
+                    onAction={handleCancel}
+                  />
+                ) : (
+                  <Button
+                    type="button"
+                    onClick={handleCancel}
+                    className="bg-iDonate-white-space border-2 hover:bg-red-50 border-iDonate-error text-iDonate-error"
+                  >
+                    Cancel
+                  </Button>
                 )}
-              />
 
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">Email</FormLabel>
-                    <FormControl className="w-[300px]">
-                      <Input placeholder="ElizabethJoe@gmail.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
-                      This is your organization's contact email.
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="contact"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm text-iDonate-navy-secondary">Contact</FormLabel>
-                    <FormControl className="w-[300px]">
-                      <Input placeholder="+855 12345678" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    <FormDescription className="text-iDonate-gray text-sm">
-                      This is your organization's contact number.
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  className="bg-iDonate-white-space border-2 hover:bg-iDonate-light-gray border-iDonate-navy-accent text-iDonate-navy-primary"
+                >
+                  Submit
+                </Button>
+              </div>
+          </CardHeader>
+        
+          <CardContent className="flex gap-9 p-0 m-0">
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="text-sm text-iDonate-navy-secondary">Full Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Elizabeth Joe" className="w-full" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription className="text-iDonate-gray text-sm">
+                    This is your organization's full name.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+        
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="text-sm text-iDonate-navy-secondary">Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ElizabethJoe@gmail.com" className="w-full" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription className="text-iDonate-gray text-sm">
+                    This is your organization's contact email.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+        
+            <FormField
+              control={form.control}
+              name="contact"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="text-sm text-iDonate-navy-secondary">Contact</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+855 12345678" className="w-full" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription className="text-iDonate-gray text-sm">
+                    This is your organization's contact number.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>        
         )}
       </form>
     </Form>
