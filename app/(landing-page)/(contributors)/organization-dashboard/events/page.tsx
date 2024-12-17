@@ -15,7 +15,7 @@ export default function Contributor() {
   const handleFilterChange = (newFilters: Record<string, any>) => {
     setFiltersApplied(newFilters);  // Directly update state without the deep comparison
   };
-  
+
 
   // Memoize filters for performance optimization
   const filters = useMemo(() => [
@@ -47,18 +47,18 @@ export default function Contributor() {
       if (filtersApplied.title && event.title !== filtersApplied.title) {
         return false;
       }
-  
+
       if (filtersApplied.total_raised) {
         const amount = Number(filtersApplied.total_raised);
         if (event.total_raised !== amount) {
           return false;
         }
       }
-  
+
       return true;
     });
   }, [filtersApplied, typedEvents]);
-  
+
 
   return (
     <section lang="km" className="flex flex-col p-9 gap-6">

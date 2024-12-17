@@ -1,5 +1,6 @@
-import { mockUsers } from '@/data/data';
-import { User } from '@/difinitions/types/media/user';
+import { mockUsers } from "@/data/data";
+import { User } from "@/difinitions/types/media/user";
+
 
 
 export const authService = {

@@ -21,7 +21,7 @@ export const LoginSchema = z.object({
     }),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters long"
-    })
+})
 })
 
 export const formSchema = z.object({
@@ -65,7 +65,7 @@ export const organizationPaymentSchema = z.object({
   .optional()
   .or(z.literal("")), // Allow empty string as default value
 });
-  
+
 export const organizationMediaSchema = z.object({
   image: z
     .string()
