@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 
 export default function Howitwork() {
   return (
-    <div className="w-full h-[72px] px-[100px]">
+    <div className="w-full h-full px-[100px]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-green-50 to-white">
         <div className="container mx-auto px-4 py-16">

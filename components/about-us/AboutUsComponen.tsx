@@ -7,7 +7,7 @@ import localFont from 'next/font/local'
 
 export default function AboutUsComponent() {
   return (
-    <div className="w-full h-[72px] px-[100px]">
+    <div className="w-full h-full">
 
       {/* Hero Section */}
       <section className="relative bg-slate-800 text-white">

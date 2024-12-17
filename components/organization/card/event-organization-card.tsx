@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { OrganizationEventType } from "@/difinitions/types/events/Organization-event";
 import { Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
+import {Toolbar} from "@/components/filter/toolbar";
+import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 
 interface OrganizationEventCardProps {
     events: OrganizationEventType[];
@@ -17,16 +18,13 @@ interface OrganizationEventCardProps {
   }
 
 
-  export function OrganizationEventCard({
+export function OrganizationEventCard({
     events,
     searchKey,
     filters,
     dateField,
     onFilterChange,
-  }: OrganizationEventCardProps) {
-
-
-      export function OrganizationEventCard({events}: { events: OrganizationEventType[] }) {
+  }: OrganizationEventCardProps){
           return (
               <>
                   <Toolbar
@@ -119,4 +117,3 @@ interface OrganizationEventCardProps {
               </>
           );
       }
-  }

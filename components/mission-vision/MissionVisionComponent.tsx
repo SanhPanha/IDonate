@@ -12,7 +12,7 @@ import { Input } from "../ui/input"
 
 export default function MissionVisionComponent() {
   return (
-    <div className="w-full h-[72px] px-[100px]">
+    <div className="w-full">
      
 
       {/* Hero Section */}
