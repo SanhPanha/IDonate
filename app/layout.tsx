@@ -60,7 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <main className="w-full overflow-auto scrollbar-hide ">{children}</main>
             </section>
           )}
-          <FooterComponent/>
+          {/* <FooterComponent/> */}
         </ThemeProvider>
           </SessionWrapper>
       </body>
