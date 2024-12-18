@@ -22,7 +22,6 @@ const inter = localFont({
   variable: "--font-inter",
   display: "swap",
   preload: true,
-  variable: "--font-inter",
   fallback: ["serif"],
 });
 

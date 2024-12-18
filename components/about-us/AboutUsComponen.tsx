@@ -25,7 +25,6 @@ export default function AboutUsComponent() {
   }
   return (
     <div className="w-full h-full">
-    <div>
 
       {/* Hero Section */}
       <section className="relative bg-slate-800 text-white">
@@ -145,5 +144,5 @@ export default function AboutUsComponent() {
       <TeamSection mentors={mentors} members={members} />
 
     </div>
-  )}
-
+  )
+}
