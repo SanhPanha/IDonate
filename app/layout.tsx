@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReactNode } from "react";
@@ -15,6 +14,7 @@ const siemreap = localFont({
   variable: "--font-siemreap",
   display: "swap",
   preload: true,
+  fallback: ["serif"],
 });
 
 const inter = localFont({
@@ -22,6 +22,8 @@ const inter = localFont({
   variable: "--font-inter",
   display: "swap",
   preload: true,
+  variable: "--font-inter",
+  fallback: ["serif"],
 });
 
 type RootLayoutProps = {

@@ -2,16 +2,13 @@
 "use client"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { members, mentors } from "@/difinitions/types/about-us/member"
-import localFont from 'next/font/local'
 import AboutUsHeroSection from "@/public/images/aboutus-bg.png"
 import { motion } from "framer-motion"
 import TrustContent from "@/public/images/trust-content.png"
 import GiveAndRecieve from "@/public/images/give-and-recieve.png"
 import BlockchainTech from "@/public/images/blockchain.png"
 import TeamSection from "./TeamSection"
-import { Facebook, Instagram, Twitter } from "lucide-react"
 
 export default function AboutUsComponent() {
   const featureVariants = {
@@ -27,6 +24,7 @@ export default function AboutUsComponent() {
     })
   }
   return (
+    <div className="w-full h-full">
     <div>
 
       {/* Hero Section */}
@@ -63,11 +61,11 @@ export default function AboutUsComponent() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-4xl leading-loose  md:text-5xl font-bold mb-2"
           >
-            ផ្ដល់​ជូន​ដំណោះ​ស្រាយ<br /> 
+            ផ្ដល់​ជូន​ដំណោះ​ស្រាយ<br />
             <span className="text-iDonate-green-secondary leading-loose">ផ្ទាល់ខ្លួន​ដើម្បី</span><br />
             ធ្វើ​ឲ្យ​ដំណើរការ<br />
             <span className="leading-loose"> ការផ្តល់​ជំនួយ​ល្អប្រសើរ​ឡើង</span>
-           
+
           </motion.h1>
 
           <motion.p
@@ -77,7 +75,7 @@ export default function AboutUsComponent() {
             className="text-gray-300 mb-8"
           >
             ធ្វើ​ឲ្យ​មាន​ផ្លាស់ប្ដូរ​តាម​រយៈ​ការ​ផ្តល់​ជំនួយ
-            ទឹកចិត្តបន្តិចបន្តួច​របស់​លោកអ្នកអាច​ជម្រុញ​ឲ្យ​មាន​ក្តីសង្ឃឹម​  និង 
+            ទឹកចិត្តបន្តិចបន្តួច​របស់​លោកអ្នកអាច​ជម្រុញ​ឲ្យ​មាន​ក្តីសង្ឃឹម​  និង
             ជួយ​បង្កើត​ពិភព​ដ៏អស្ចារ្យ​សម្រាប់​សហគមន៍​ដែល​កំពុងចួបការលំបាក។ ពួក​យើង​នឹងបង្កើតវាទាំងអស់គ្នា។
           </motion.p>
 
@@ -100,8 +98,8 @@ export default function AboutUsComponent() {
 
       {/* Features Section */}
       <section className="py-16">
-        <div className="container mx-auto px-[100px]">
-          <h2 className="text-2xl font-bold text-center mb-12">តើវាដំណើរការបានយ៉ាងដូច?</h2>
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-12">យើងធ្វើអ្វីខ្លះ</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -145,8 +143,7 @@ export default function AboutUsComponent() {
 
       {/* Team Section */}
       <TeamSection mentors={mentors} members={members} />
-   
+
     </div>
-  )
-}
+  )}
 

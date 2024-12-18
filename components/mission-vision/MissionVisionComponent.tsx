@@ -85,7 +85,7 @@ export default function MissionVision() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative h-[600px] text-white">
+      <section className="relative h-[600px]">
         <Image
           src={HeroSectionImage}
           alt="People helping people"
