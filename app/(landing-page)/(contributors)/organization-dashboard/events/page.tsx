@@ -1,8 +1,8 @@
 "use client";
 
 import { OrganizationEventCard } from "@/components/organization/card/event-organization-card";
-import { OrganizationEventType } from "@/difinitions/types/events/Organization-event";
 import events from "@/data/organizaation-event-data.json";
+import { OrganizationEventType } from "@/difinitions/dto/Organization-event";
 import { useState, useMemo } from "react";
 
 export default function Contributor() {
