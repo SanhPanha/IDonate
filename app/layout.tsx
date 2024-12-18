@@ -34,8 +34,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const showSidebar = pathname.startsWith("/organization-dashboard/");
 
   return (
-    <html lang="en" className={`h-full w-full ${siemreap.variable} ${inter.variable}`}>
-      <body className="flex flex-col min-h-screen bg-background text-foreground">
+    <html lang="en" className={`min-h-screen w-full overflow-auto scrollbar-hide ${siemreap.variable} ${inter.variable}`}>
+      <body className="flex flex-col h-full bg-background text-foreground">
+
         <SessionWrapper>
           <ThemeProvider
             attribute="class"
@@ -43,26 +44,39 @@ export default function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col h-full w-full">
               <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <NavbarComponent />
               </header>
 
-              <div className="flex-grow overflow-y-auto">
-                {showSidebar && (
-                  <aside className="w-64 flex-shrink-0 hidden md:block">
+              {showSidebar ? (
+                <div className="w-full h-full flex flex-grow overflow-y-auto">
+                  {/* Sidebar */}
+                  <aside className="flex-shrink-0 hidden md:block h-auto flex-grow">
                     <OrganizationSidebarComponent />
                   </aside>
-                )}
-                <main>
-                  {children}
-                </main>
-              </div>
 
+                  {/* Main Content */}
+                  <main className="w-full flex-grow">
+                    {children}
+                  </main>
+                </div>
+              ) : (
+                <div className="flex-grow overflow-y-auto">
+                  <main>
+                    {children}
+                  </main>
+                </div>
+              )}
+
+
+             {!showSidebar && (
               <footer className="bg-iDonate-white-space">
                 <FooterComponent />
               </footer>
+              )}
             </div>
+
           </ThemeProvider>
         </SessionWrapper>
       </body>
